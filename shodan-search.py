@@ -6,9 +6,12 @@
 
 import shodan
 import sys
+import csv
 
 # Configuration
-API_KEY = ''
+#API_KEY = 'YOUR API KEY'
+# Configuration
+
 
 # Input validation
 if len(sys.argv) == 1:
@@ -25,23 +28,24 @@ try:
     # Use the search() method to get results for the query
     results = api.search(query)
 
-    print('Shodan Search Results')
-    print('Query: %s' % query)
-    print('Total Results: %s\n' % results['total'])
+    # Write the results to a CSV file
+    with open('results.csv', 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
 
-    # Print information about open ports and vulnerabilities
-    for result in results['matches']:
-        ip = result['ip_str']
-        port = result['port']
-        print('IP: %s' % ip)
-        print('Port: %s' % port)
+        # Write header row to CSV file
+        writer.writerow(['IP', 'Port', 'Vulnerabilities'])
 
-        if 'vulns' in result:
-            vulnerabilities = result['vulns']
-            print('Vulnerabilities: %s' % ', '.join(vulnerabilities))
+        # Write results to CSV file
+        for result in results['matches']:
+            ip = result['ip_str']
+            port = result['port']
 
-        # Print an empty line between summary info
-        print('')
+            if 'vulns' in result:
+                vulnerabilities = ', '.join(result['vulns'])
+            else:
+                vulnerabilities = ''
+
+            writer.writerow([ip, port, vulnerabilities])
 
 except Exception as e:
     print('Error: %s' % e)
