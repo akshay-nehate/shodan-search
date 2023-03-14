@@ -7,4 +7,4 @@ A python script to search Shodan and store information in a CSV.
 ## Output 
 Results are stored in ```results.csv``` file on per IP basis.
 
-## Want to contribute ? create a pull request here - 
+## Want to contribute ? create a pull request.
