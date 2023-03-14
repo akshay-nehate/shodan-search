@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 #
-# query-summary.py
 # Search Shodan and print summary information for the query.
 #
-# Author: achillean
+# Author: akshay.nehate@n4l.co.nz
 
 import shodan
 import sys
 
 # Configuration
-API_KEY = '7SJcfIZLO7ZSBA9kfCbrMzrE56ijGEQt'
+API_KEY = ''
 
 # Input validation
 if len(sys.argv) == 1:
