@@ -9,7 +9,7 @@ import sys
 import csv
 
 # Configuration
-#API_KEY = 'YOUR API KEY'
+API_KEY = '7SJcfIZLO7ZSBA9kfCbrMzrE56ijGEQt'
 # Configuration
 
 
@@ -27,9 +27,11 @@ try:
 
     # Use the search() method to get results for the query
     results = api.search(query)
-
+    # debug 
+    print (query)
+    filename = f"{query.replace('ip:', 'results-')}.csv"
     # Write the results to a CSV file
-    with open('results.csv', 'w', newline='') as csvfile:
+    with open(filename, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
 
         # Write header row to CSV file
