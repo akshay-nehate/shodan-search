@@ -14,8 +14,8 @@ API_KEY = '7SJcfIZLO7ZSBA9kfCbrMzrE56ijGEQt'
 
 
 # Input validation
-if len(sys.argv) == 1:
-    print('Usage: %s <search query>' % sys.argv[0])
+if len(sys.argv) < 2:
+    print('Usage: %s <search query> [pages]' % sys.argv[0])
     sys.exit(1)
 
 try:
@@ -23,22 +23,28 @@ try:
     api = shodan.Shodan(API_KEY)
 
     # Generate a query string out of the command-line arguments
-    query = ' '.join(sys.argv[1:])
+    query = ' '.join(sys.argv[1:-1])
 
     # Use the search() method to get results for the query
-    results = api.search(query)
-    # debug 
+    pages = int(sys.argv[-1])
+    results = []
+    for page in range(1, pages + 1):
+        response = api.search(query, page=page)
+        results += response['matches']
+
+    # debug
     print (query)
-    filename = f"{query.replace('ip:', 'results-')}.csv"
+    #filename = f"{query.replace('ip:', 'results-')}.csv"
+
     # Write the results to a CSV file
-    with open(filename, 'w', newline='') as csvfile:
+    with open('results.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
 
         # Write header row to CSV file
         writer.writerow(['IP', 'Port', 'Vulnerabilities'])
 
         # Write results to CSV file
-        for result in results['matches']:
+        for result in results:
             ip = result['ip_str']
             port = result['port']
 
