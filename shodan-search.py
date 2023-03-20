@@ -9,7 +9,7 @@ import sys
 import csv
 
 # Configuration
-API_KEY = '7SJcfIZLO7ZSBA9kfCbrMzrE56ijGEQt'
+API_KEY = ''
 # Configuration
 
 
